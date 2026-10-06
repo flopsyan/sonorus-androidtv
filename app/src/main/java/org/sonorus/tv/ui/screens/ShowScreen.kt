@@ -1,5 +1,6 @@
 package org.sonorus.tv.ui.screens
 
+import org.sonorus.tv.ui.components.SonorusButton
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -33,7 +34,6 @@ import org.sonorus.tv.ui.Nav
 import org.sonorus.tv.ui.ReloadOnReturn
 import org.sonorus.tv.ui.rememberLoad
 import org.sonorus.tv.ui.screens.detail.DetailBackdrop
-import org.sonorus.tv.ui.screens.detail.DetailButton
 import org.sonorus.tv.ui.screens.detail.DetailHead
 import org.sonorus.tv.ui.screens.detail.EpisodeMenu
 import org.sonorus.tv.ui.screens.detail.EpisodeRow
@@ -91,14 +91,14 @@ private fun ShowPage(s: ShowDetail, load: Load<ShowDetail>, startSeason: Int?, n
                 DetailHead(s.title, s.logo, showFacts(s), s.vote, showSeen(s), s.tagline, s.overview) {
                     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                         if (play != null) {
-                            DetailButton(
+                            SonorusButton(
                                 play.label,
                                 if (play.fromStart) Icons.Filled.Replay else Icons.Filled.PlayArrow,
                                 { back.leave(null); nav.watch(play.videoId, play.fromStart) },
                                 Modifier.focusRequester(primary),
                             )
                         }
-                        DetailButton(
+                        SonorusButton(
                             markLabel("Serie", allDone),
                             markIcon(allDone),
                             { scope.change(load, failure) { api.setTitleWatched(s.id, !allDone) } },

@@ -1,5 +1,6 @@
 package org.sonorus.tv.ui.screens
 
+import org.sonorus.tv.ui.components.SonorusButton
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -31,7 +32,6 @@ import org.sonorus.tv.ui.ReloadOnReturn
 import org.sonorus.tv.ui.components.ProgressLine
 import org.sonorus.tv.ui.rememberLoad
 import org.sonorus.tv.ui.screens.detail.DetailBackdrop
-import org.sonorus.tv.ui.screens.detail.DetailButton
 import org.sonorus.tv.ui.screens.detail.DetailHead
 import org.sonorus.tv.ui.screens.detail.ErrorLine
 import org.sonorus.tv.ui.screens.detail.FactLines
@@ -76,17 +76,17 @@ private fun MoviePage(m: MovieDetail, load: Load<MovieDetail>, nav: Nav) {
                         Text("Keine Datei auf dem Server.", style = MaterialTheme.typography.bodyMedium, color = SonorusTheme.colors.textDim)
                     } else {
                         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                            DetailButton(
+                            SonorusButton(
                                 moviePlayLabel(v),
                                 Icons.Filled.PlayArrow,
                                 { back.leave(null); nav.watch(v.id) },
                                 Modifier.focusRequester(primary),
                             )
                             if (v.progress.started) {
-                                DetailButton("Von vorn", Icons.Filled.Replay, { back.leave(null); nav.watch(v.id, fromStart = true) })
+                                SonorusButton("Von vorn", Icons.Filled.Replay, { back.leave(null); nav.watch(v.id, fromStart = true) })
                             }
                             val done = v.progress.completed
-                            DetailButton(markLabel(null, done), markIcon(done), {
+                            SonorusButton(markLabel(null, done), markIcon(done), {
                                 scope.change(load, failure) { api.setTitleWatched(m.id, !done) }
                             })
                         }

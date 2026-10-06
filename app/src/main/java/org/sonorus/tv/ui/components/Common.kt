@@ -43,7 +43,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.tv.material3.Button
 import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
@@ -91,7 +90,7 @@ fun ErrorNote(message: String, onRetry: (() -> Unit)? = null, modifier: Modifier
             modifier = Modifier.widthIn(max = 560.dp),
         )
         if (onRetry != null) {
-            Button(onClick = onRetry, modifier = Modifier.focusRequester(focus)) { Text("Erneut versuchen") }
+            SonorusButton("Erneut versuchen", null, onRetry, Modifier.focusRequester(focus))
             LaunchedEffect(Unit) { runCatching { focus.requestFocus() } }
         }
     }

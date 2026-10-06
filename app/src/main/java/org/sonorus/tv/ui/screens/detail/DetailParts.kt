@@ -32,7 +32,6 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.node.ModifierNodeElement
@@ -42,8 +41,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.tv.material3.Button
-import androidx.tv.material3.ButtonDefaults
 import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
@@ -175,26 +172,6 @@ internal fun FactLines(lines: List<Pair<String, String>>) {
 internal fun markIcon(done: Boolean) = if (done) Icons.Filled.RemoveDone else Icons.Filled.Check
 
 /** Every button on these pages: quiet until focused, then amber like the cards' focus frame. */
-@Composable
-internal fun DetailButton(label: String, icon: ImageVector, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    val colors = SonorusTheme.colors
-    Button(
-        onClick = onClick,
-        modifier = modifier,
-        contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
-        colors = ButtonDefaults.colors(
-            containerColor = colors.surface3,
-            contentColor = colors.text,
-            focusedContainerColor = colors.accent,
-            focusedContentColor = colors.accentInk,
-        ),
-    ) {
-        Icon(icon, null, Modifier.size(ButtonDefaults.IconSize))
-        Spacer(Modifier.width(ButtonDefaults.IconSpacing))
-        Text(label)
-    }
-}
-
 @Composable
 internal fun ErrorLine(message: String) {
     Text(

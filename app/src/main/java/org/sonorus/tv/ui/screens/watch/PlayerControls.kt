@@ -1,5 +1,6 @@
 package org.sonorus.tv.ui.screens.watch
 
+import org.sonorus.tv.ui.components.SonorusButton
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.focusable
@@ -55,7 +56,6 @@ import androidx.tv.material3.Icon
 import androidx.tv.material3.IconButton
 import androidx.tv.material3.IconButtonDefaults
 import androidx.tv.material3.MaterialTheme
-import androidx.tv.material3.OutlinedButton
 import androidx.tv.material3.Text
 import org.sonorus.tv.player.VideoRules
 import org.sonorus.tv.ui.VideoFmt
@@ -293,8 +293,8 @@ internal fun NextCard(
         }
         Spacer(Modifier.height(12.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            Button(onClick = onPlay, modifier = Modifier.focusRequester(focus)) { Text("Jetzt ansehen") }
-            OutlinedButton(onClick = onDismiss) { Text("Abspann ansehen") }
+            SonorusButton("Jetzt ansehen", null, onPlay, Modifier.focusRequester(focus))
+            SonorusButton("Abspann ansehen", null, onDismiss)
         }
     }
 }

@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -14,11 +16,11 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
-import androidx.tv.material3.OutlinedButton
 import androidx.tv.material3.Text
 import org.sonorus.tv.BuildConfig
 import org.sonorus.tv.SonorusTvApp
 import org.sonorus.tv.ui.components.PageGutter
+import org.sonorus.tv.ui.components.SonorusButton
 import org.sonorus.tv.ui.components.SectionLabel
 import org.sonorus.tv.ui.theme.SonorusTheme
 
@@ -40,9 +42,7 @@ fun AccountScreen() {
             color = colors.text,
         )
         Text(account.serverUrl, style = MaterialTheme.typography.bodyLarge, color = colors.textDim)
-        OutlinedButton(onClick = { account.logout() }, modifier = Modifier.focusRequester(focus)) {
-            Text("Abmelden")
-        }
+        SonorusButton("Abmelden", Icons.AutoMirrored.Filled.Logout, { account.logout() }, Modifier.focusRequester(focus))
         Text("Version ${BuildConfig.VERSION_NAME}", style = MaterialTheme.typography.bodySmall, color = colors.textFaint)
     }
     LaunchedEffect(Unit) { runCatching { focus.requestFocus() } }

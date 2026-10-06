@@ -26,12 +26,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.tv.material3.Button
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import kotlinx.coroutines.launch
 import org.sonorus.tv.SonorusTvApp
 import org.sonorus.tv.data.errorMessage
+import org.sonorus.tv.ui.components.SonorusButton
 import org.sonorus.tv.ui.components.TvTextField
 import org.sonorus.tv.ui.theme.SonorusTheme
 
@@ -91,9 +91,7 @@ fun LoginScreen() {
                 keyboardActions = KeyboardActions(onDone = { submit() }),
             )
             error?.let { Text(it, style = MaterialTheme.typography.bodyMedium, color = colors.danger) }
-            Button(onClick = ::submit, enabled = !busy, modifier = Modifier.fillMaxWidth()) {
-                Text(if (busy) "Verbinde …" else "Anmelden")
-            }
+            SonorusButton(if (busy) "Verbinde …" else "Anmelden", null, ::submit, Modifier.fillMaxWidth(), enabled = !busy)
         }
     }
     LaunchedEffect(Unit) { runCatching { first.requestFocus() } }

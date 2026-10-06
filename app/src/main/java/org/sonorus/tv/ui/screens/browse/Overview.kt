@@ -1,17 +1,16 @@
 package org.sonorus.tv.ui.screens.browse
 
+import org.sonorus.tv.ui.components.SonorusButton
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -33,9 +32,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.tv.material3.Button
-import androidx.tv.material3.ButtonDefaults
-import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import coil3.compose.AsyncImage
@@ -200,26 +196,25 @@ private fun FeaturedHero(t: VideoTitle, nav: Nav, returnFocus: ReturnFocus) {
                 )
             }
             Row(Modifier.padding(top = 6.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Button(
+                SonorusButton(
+                    "Details",
+                    null,
                     onClick = {
                         returnFocus.open("hero:details")
                         if (t.isMovie) nav.movie(t.id) else nav.show(t.id)
                     },
                     modifier = Modifier.returnFocus(returnFocus, "hero:details"),
-                ) { Text("Details") }
+                )
                 if (t.isMovie && videoId != null) {
-                    Button(
+                    SonorusButton(
+                        "Abspielen",
+                        Icons.Filled.PlayArrow,
                         onClick = {
                             returnFocus.open("hero:play")
                             nav.watch(videoId)
                         },
                         modifier = Modifier.returnFocus(returnFocus, "hero:play"),
-                        contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
-                    ) {
-                        Icon(Icons.Filled.PlayArrow, null, Modifier.size(ButtonDefaults.IconSize))
-                        Spacer(Modifier.width(ButtonDefaults.IconSpacing))
-                        Text("Abspielen")
-                    }
+                    )
                 }
             }
         }

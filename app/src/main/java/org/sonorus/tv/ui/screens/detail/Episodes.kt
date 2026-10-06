@@ -1,5 +1,6 @@
 package org.sonorus.tv.ui.screens.detail
 
+import org.sonorus.tv.ui.components.SonorusButton
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -119,7 +120,7 @@ internal fun SeasonHead(x: VideoSeason, watched: Int, onMark: (Boolean) -> Unit)
                 modifier = Modifier.widthIn(max = 640.dp),
             )
         }
-        DetailButton(markLabel("Staffel", done), markIcon(done), { onMark(!done) })
+        SonorusButton(markLabel("Staffel", done), markIcon(done), { onMark(!done) })
     }
 }
 
@@ -225,8 +226,8 @@ internal fun EpisodeMenu(
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
-            DetailButton(markLabel(null, done), markIcon(done), onMark, Modifier.fillMaxWidth().focusRequester(first))
-            DetailButton("Von vorn abspielen", Icons.Filled.Replay, onRestart, Modifier.fillMaxWidth())
+            SonorusButton(markLabel(null, done), markIcon(done), onMark, Modifier.fillMaxWidth().focusRequester(first))
+            SonorusButton("Von vorn abspielen", Icons.Filled.Replay, onRestart, Modifier.fillMaxWidth())
         }
         LaunchedEffect(Unit) { focusFirst(first) }
     }
