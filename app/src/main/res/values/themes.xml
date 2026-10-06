@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Compose draws everything; the window background only avoids a white flash. -->
+    <style name="Theme.Sonorus" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/sonorus_bg</item>
+    </style>
+</resources>

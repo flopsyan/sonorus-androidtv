@@ -1,0 +1,20 @@
+*.iml
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+/app/build/
+*.apk
+*.keystore
+!debug.keystore
+
+# The release signing secrets. Never committed.
+keystore.properties
+
+# Local Claude Code context: points at private notes, not for the public repo
+CLAUDE.md
