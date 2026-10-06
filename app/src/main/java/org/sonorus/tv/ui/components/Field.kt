@@ -18,7 +18,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -40,6 +48,8 @@ fun TvTextField(
 ) {
     val colors = SonorusTheme.colors
     var focused by remember { mutableStateOf(false) }
+    val keyboard = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
     val shape = RoundedCornerShape(8.dp)
     Column(modifier.fillMaxWidth()) {
         Text(label, style = MaterialTheme.typography.labelLarge, color = if (focused) colors.text else colors.textDim)
@@ -50,12 +60,26 @@ fun TvTextField(
             singleLine = true,
             textStyle = MaterialTheme.typography.bodyLarge.copy(color = colors.text),
             cursorBrush = SolidColor(colors.accent),
-            keyboardOptions = keyboardOptions,
+            // On a TV the keyboard covers half the screen, so it opens on OK, not on every focus pass.
+            keyboardOptions = keyboardOptions.copy(showKeyboardOnFocus = false),
             keyboardActions = keyboardActions,
             visualTransformation = visualTransformation,
             modifier = Modifier
                 .fillMaxWidth()
-                .onFocusChanged { focused = it.isFocused },
+                .onFocusChanged { focused = it.isFocused }
+                // The field would keep Up and Down for its cursor and trap the remote.
+                .onPreviewKeyEvent { event ->
+                    val down = event.type == KeyEventType.KeyDown
+                    when (event.key) {
+                        Key.DirectionCenter, Key.Enter, Key.NumPadEnter -> {
+                            if (!down) keyboard?.show()
+                            true
+                        }
+                        Key.DirectionDown -> down && focusManager.moveFocus(FocusDirection.Down)
+                        Key.DirectionUp -> down && focusManager.moveFocus(FocusDirection.Up)
+                        else -> false
+                    }
+                },
             decorationBox = { inner ->
                 Box(
                     Modifier
