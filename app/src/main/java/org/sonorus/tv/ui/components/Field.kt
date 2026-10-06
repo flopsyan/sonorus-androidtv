@@ -48,6 +48,7 @@ fun TvTextField(
 ) {
     val colors = SonorusTheme.colors
     var focused by remember { mutableStateOf(false) }
+    var editing by remember { mutableStateOf(false) }
     val keyboard = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
     val shape = RoundedCornerShape(8.dp)
@@ -60,19 +61,27 @@ fun TvTextField(
             singleLine = true,
             textStyle = MaterialTheme.typography.bodyLarge.copy(color = colors.text),
             cursorBrush = SolidColor(colors.accent),
-            // On a TV the keyboard covers half the screen, so it opens on OK, not on every focus pass.
+            // On a TV the keyboard covers half the screen, so it opens on OK, not on every focus
+            // pass. Read-only until then, because Android reopens it for any editable field.
+            readOnly = !editing,
             keyboardOptions = keyboardOptions.copy(showKeyboardOnFocus = false),
             keyboardActions = keyboardActions,
             visualTransformation = visualTransformation,
             modifier = Modifier
                 .fillMaxWidth()
-                .onFocusChanged { focused = it.isFocused }
+                .onFocusChanged {
+                    focused = it.isFocused
+                    if (!it.isFocused) editing = false
+                }
                 // The field would keep Up and Down for its cursor and trap the remote.
                 .onPreviewKeyEvent { event ->
                     val down = event.type == KeyEventType.KeyDown
                     when (event.key) {
                         Key.DirectionCenter, Key.Enter, Key.NumPadEnter -> {
-                            if (!down) keyboard?.show()
+                            if (!down) {
+                                editing = true
+                                keyboard?.show()
+                            }
                             true
                         }
                         Key.DirectionDown -> down && focusManager.moveFocus(FocusDirection.Down)
